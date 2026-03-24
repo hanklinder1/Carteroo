@@ -7,7 +7,18 @@ import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
   const router = useRouter();
-  const [form, setForm] = useState({ name: "", email: "", password: "", location: "" });
+  const US_STATES = [
+    "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
+    "Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa",
+    "Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan",
+    "Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire",
+    "New Jersey","New Mexico","New York","North Carolina","North Dakota","Ohio",
+    "Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota",
+    "Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia",
+    "Wisconsin","Wyoming",
+  ];
+
+  const [form, setForm] = useState({ name: "", email: "", password: "", location: "Florida" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -78,14 +89,16 @@ export default function RegisterPage() {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-          <input
-            type="text"
+          <label className="block text-sm font-medium text-gray-700 mb-1">State</label>
+          <select
             value={form.location}
             onChange={(e) => update("location", e.target.value)}
-            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-gray-400"
-            placeholder="City, State"
-          />
+            className="w-full border border-gray-300 rounded-lg px-3 py-2.5 text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-teal-300 focus:border-gray-400"
+          >
+            {US_STATES.map((state) => (
+              <option key={state} value={state}>{state}</option>
+            ))}
+          </select>
         </div>
         {error && <p className="text-red-500 text-xs">{error}</p>}
         <button

@@ -24,12 +24,17 @@ CREATE POLICY "Users can insert own profile" ON profiles
 CREATE OR REPLACE FUNCTION handle_new_user()
 RETURNS TRIGGER AS $$
 BEGIN
-  INSERT INTO profiles (id, name, email)
+  INSERT INTO profiles (id, name, email, location)
   VALUES (
     NEW.id,
     NEW.raw_user_meta_data->>'name',
-    NEW.email
-  );
+    NEW.email,
+    NEW.raw_user_meta_data->>'location'
+  )
+  ON CONFLICT (id) DO NOTHING;
+  RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  -- Never block user creation due to profile errors
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
