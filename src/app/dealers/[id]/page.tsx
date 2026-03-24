@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft, MapPin, Phone, Mail, Globe, Star } from "lucide-react";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { Dealer } from "@/lib/types";
 import CartCard from "@/components/CartCard";
 import { GolfCart } from "@/lib/types";
@@ -11,7 +11,7 @@ export default async function DealerDetailPage({
 }: {
   params: { id: string };
 }) {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("dealers")
     .select("*")
     .eq("id", params.id)
@@ -38,7 +38,7 @@ export default async function DealerDetailPage({
   };
 
   // Fetch dealer's listings
-  const { data: listingRows } = await supabaseAdmin
+  const { data: listingRows } = await getAdmin()
     .from("listings")
     .select("*")
     .eq("seller_id", data.user_id)

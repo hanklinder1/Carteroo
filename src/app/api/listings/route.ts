@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { GolfCart } from "@/lib/types";
 
 // Map DB row → GolfCart
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
   const powerType = searchParams.get("powerType");
   const priceRange = searchParams.get("price");
 
-  let query = supabaseAdmin
+  let query = getAdmin()
     .from("listings")
     .select("*")
     .eq("status", "active")
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("listings")
     .insert({
       title: body.title,

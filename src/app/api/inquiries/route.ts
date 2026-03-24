@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Fetch the listing to get seller info
-  const { data: listing, error: listingError } = await supabaseAdmin
+  const { data: listing, error: listingError } = await getAdmin()
     .from("listings")
     .select("title, seller_name, seller_email")
     .eq("id", listingId)
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
   }
 
   // Save inquiry to DB
-  const { error: inquiryError } = await supabaseAdmin.from("inquiries").insert({
+  const { error: inquiryError } = await getAdmin().from("inquiries").insert({
     listing_id: listingId,
     buyer_name: buyerName,
     buyer_email: buyerEmail,

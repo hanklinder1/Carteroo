@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { Dealer } from "@/lib/types";
 
 function toDealer(row: Record<string, unknown>): Dealer {
@@ -23,7 +23,7 @@ function toDealer(row: Record<string, unknown>): Dealer {
 }
 
 export async function GET() {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("dealers")
     .select("*")
     .order("created_at", { ascending: false });
@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "name and email are required" }, { status: 400 });
   }
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("dealers")
     .insert({
       name: body.name,

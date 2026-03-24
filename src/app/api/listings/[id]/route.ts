@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { GolfCart } from "@/lib/types";
 
 function toGolfCart(row: Record<string, unknown>): GolfCart {
@@ -31,7 +31,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("listings")
     .select("*")
     .eq("id", params.id)
@@ -51,7 +51,7 @@ export async function PATCH(
 ) {
   const body = await req.json();
 
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("listings")
     .update(body)
     .eq("id", params.id)
@@ -67,7 +67,7 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { error } = await supabaseAdmin
+  const { error } = await getAdmin()
     .from("listings")
     .delete()
     .eq("id", params.id);

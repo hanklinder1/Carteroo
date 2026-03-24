@@ -21,8 +21,8 @@ export default async function CartDetailPage({
   params: { id: string };
 }) {
   // Fetch directly via Supabase admin in server component
-  const { supabaseAdmin } = await import("@/lib/supabase/admin");
-  const { data, error } = await supabaseAdmin
+  const { getAdmin } = await import("@/lib/supabase/admin");
+  const { data, error } = await getAdmin()
     .from("listings")
     .select("*")
     .eq("id", params.id)

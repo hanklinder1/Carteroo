@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabaseAdmin } from "@/lib/supabase/admin";
+import { getAdmin } from "@/lib/supabase/admin";
 import { Dealer } from "@/lib/types";
 
 function toDealer(row: Record<string, unknown>): Dealer {
@@ -26,7 +26,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const { data, error } = await supabaseAdmin
+  const { data, error } = await getAdmin()
     .from("dealers")
     .select("*")
     .eq("id", params.id)
