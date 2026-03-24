@@ -28,7 +28,7 @@ export default function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="text-sm font-semibold text-gray-700 hover:text-teal-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all hover:after:w-full"
+                className="text-sm font-semibold text-gray-900 hover:text-teal-600 transition-colors relative after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[2px] after:bg-teal-500 after:transition-all hover:after:w-full"
               >
                 {link.label}
               </Link>
@@ -82,7 +82,7 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="block py-3 text-gray-700 hover:text-teal-600 text-sm font-semibold border-b border-gray-50"
+              className="block py-3 text-gray-900 hover:text-teal-600 text-sm font-semibold border-b border-gray-50"
               onClick={() => setMobileOpen(false)}
             >
               {link.label}

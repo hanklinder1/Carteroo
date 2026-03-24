@@ -119,7 +119,7 @@ export default function Home() {
           <ScrollReveal>
             <div className="flex justify-between items-end mb-8">
               <div>
-                <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">Browse</span>
+                <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Browse</span>
                 <h2 className="text-2xl font-extrabold text-gray-900 mt-1">
                   Featured Listings
                 </h2>
@@ -148,7 +148,7 @@ export default function Home() {
         <div className="max-w-[1280px] mx-auto px-4 sm:px-6 lg:px-8">
           <ScrollReveal>
             <div className="text-center mb-14">
-              <span className="text-teal-600 text-xs font-bold uppercase tracking-wider">Simple Process</span>
+              <span className="text-gray-500 text-xs font-bold uppercase tracking-wider">Simple Process</span>
               <h2 className="text-2xl font-extrabold text-gray-900 mt-1">
                 How It Works
               </h2>
