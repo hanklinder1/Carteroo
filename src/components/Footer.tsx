@@ -10,7 +10,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-3">
               <ShoppingCart size={20} className="text-teal-400" />
               <h3 className="text-white font-extrabold text-lg">
-                Cart<span className="text-teal-400">Market</span>
+                Wh<span className="text-teal-400">rrly</span>
               </h3>
             </div>
             <p className="text-gray-400 text-sm leading-relaxed mb-4">
@@ -20,7 +20,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-gray-500 text-xs">
               <span className="flex items-center gap-2">
                 <Mail size={13} className="text-teal-500" />
-                support@cartmarket.com
+                support@whrrly.com
               </span>
               <span className="flex items-center gap-2">
                 <Phone size={13} className="text-teal-500" />
@@ -67,7 +67,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-8 pt-8 border-t border-gray-800 text-center text-gray-500 text-xs">
-          &copy; {new Date().getFullYear()} CartMarket. All rights reserved.
+          &copy; {new Date().getFullYear()} Whrrly. All rights reserved.
         </div>
       </div>
     </footer>

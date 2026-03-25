@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CartMarket - Buy & Sell Golf Carts",
+  title: "Whrrly - Buy & Sell Golf Carts",
   description:
     "The easiest way to buy and sell golf carts. Browse listings, connect with dealers, and find your perfect ride.",
 };
