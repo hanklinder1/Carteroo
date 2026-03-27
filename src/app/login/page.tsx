@@ -32,7 +32,7 @@ export default function LoginPage() {
   return (
     <div className="max-w-sm mx-auto px-4 py-16">
       <h1 className="text-2xl font-bold text-gray-900 mb-1 text-center">Welcome Back</h1>
-      <p className="text-gray-400 text-sm text-center mb-8">Sign in to your CartMarket account</p>
+      <p className="text-gray-400 text-sm text-center mb-8">Sign in to your Carteroo account</p>
       <form onSubmit={handleSubmit} className="bg-white rounded-xl border border-gray-200 p-6 space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>

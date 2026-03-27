@@ -71,7 +71,7 @@ export default function DemoHome() {
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-teal-600/20 backdrop-blur-sm border border-teal-400/30 text-teal-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             <Zap size={14} />
-            Florida&apos;s #1 Golf Cart Marketplace
+            Florida&apos;s #1 Golf Cart Marketplace — Carteroo
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-3 tracking-tight leading-tight">
             Find Your Perfect
@@ -200,7 +200,7 @@ export default function DemoHome() {
             {[
               { icon: Search, step: "Step 1", title: "Browse Listings", desc: "Search through carts from private sellers and authorized dealers. Filter by price, make, condition, and more.", delay: 0 },
               { icon: Shield, step: "Step 2", title: "Verified Sellers", desc: "Every dealer is verified and reviewed. Private sellers create profiles so you know who you're buying from.", delay: 150 },
-              { icon: Handshake, step: "Step 3", title: "Close the Deal", desc: "Message sellers directly, schedule test drives, and finalize your purchase — all through CartMarket.", delay: 300 },
+              { icon: Handshake, step: "Step 3", title: "Close the Deal", desc: "Message sellers directly, schedule test drives, and finalize your purchase — all through Carteroo.", delay: 300 },
             ].map(({ icon: Icon, step, title, desc, delay }) => (
               <ScrollReveal key={step} delay={delay}>
                 <div className="text-center group">

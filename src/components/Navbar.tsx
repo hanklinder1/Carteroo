@@ -64,7 +64,7 @@ export default function Navbar() {
             className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-gray-900"
           >
             <ShoppingCart size={24} className="text-teal-600" />
-            Cart<span className="text-teal-600">Market</span>
+            Carter<span className="text-teal-600">oo</span>
           </Link>
 
           {/* Right side */}

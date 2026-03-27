@@ -4,7 +4,7 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
-// TODO: Add your verified Resend domain email here, e.g. "CartMarket <noreply@yourdomain.com>"
+// TODO: Add your verified Resend domain email here, e.g. "Carteroo <noreply@yourdomain.com>"
 // Until your domain is verified, use "onboarding@resend.dev" (sends only to your Resend account email)
 const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "onboarding@resend.dev";
 
@@ -47,7 +47,7 @@ export async function POST(req: NextRequest) {
     subject: `New inquiry on your listing: ${listing.title}`,
     html: `
       <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
-        <h2 style="color: #0f766e;">New Inquiry — CartMarket</h2>
+        <h2 style="color: #0f766e;">New Inquiry — Carteroo</h2>
         <p>Hi <strong>${listing.seller_name}</strong>,</p>
         <p>Someone is interested in your listing: <strong>${listing.title}</strong></p>
         <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />

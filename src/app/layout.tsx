@@ -3,11 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "CartMarket - Buy & Sell Golf Carts",
+  title: "Carteroo - Buy & Sell Golf Carts",
   description:
     "The easiest way to buy and sell golf carts. Browse listings, connect with dealers, and find your perfect ride.",
 };
@@ -23,6 +24,7 @@ export default function RootLayout({
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

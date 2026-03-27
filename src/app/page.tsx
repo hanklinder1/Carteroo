@@ -53,7 +53,7 @@ export default function Home() {
         <div className="relative z-10 text-center px-4 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-teal-600/20 backdrop-blur-sm border border-teal-400/30 text-teal-200 text-xs font-semibold px-4 py-1.5 rounded-full mb-6">
             <Zap size={14} />
-            Florida&apos;s #1 Golf Cart Marketplace
+            Florida&apos;s #1 Golf Cart Marketplace — Carteroo
           </div>
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-3 tracking-tight leading-tight">
             Find Your Perfect
@@ -190,7 +190,7 @@ export default function Home() {
                 <h3 className="text-gray-900 font-bold text-lg mb-2">Close the Deal</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">
                   Message sellers directly, schedule test drives, and finalize
-                  your purchase — all through CartMarket.
+                  your purchase — all through Carteroo.
                 </p>
               </div>
             </ScrollReveal>
