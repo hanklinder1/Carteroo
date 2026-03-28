@@ -8,9 +8,30 @@ import { Analytics } from "@vercel/analytics/react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Carteroo - Buy & Sell Golf Carts",
+  title: {
+    default: "Carteroo — Buy & Sell Golf Carts in Florida",
+    template: "%s | Carteroo",
+  },
   description:
-    "The easiest way to buy and sell golf carts. Browse listings, connect with dealers, and find your perfect ride.",
+    "Florida's #1 golf cart marketplace. Browse thousands of listings from private sellers and verified dealers. Find electric and gas golf carts near you.",
+  keywords: ["golf cart", "golf cart for sale", "buy golf cart", "sell golf cart", "Florida golf cart", "used golf cart", "electric golf cart"],
+  metadataBase: new URL("https://carteroo.com"),
+  openGraph: {
+    type: "website",
+    siteName: "Carteroo",
+    title: "Carteroo — Buy & Sell Golf Carts in Florida",
+    description: "Florida's #1 golf cart marketplace. Browse listings from private sellers and verified dealers.",
+    url: "https://carteroo.com",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Carteroo — Buy & Sell Golf Carts in Florida",
+    description: "Florida's #1 golf cart marketplace. Browse listings from private sellers and verified dealers.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

@@ -4,15 +4,31 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, MapPin, Zap, Fuel, Users, Gauge, Battery, Calendar, User } from "lucide-react";
 import ContactForm from "./ContactForm";
 import { GolfCart } from "@/lib/types";
+import type { Metadata } from "next";
 
-async function getListing(id: string): Promise<GolfCart | null> {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SUPABASE_URL ? process.env.NEXTAUTH_URL ?? "" : ""}/api/listings/${id}`,
-    { cache: "no-store" }
-  );
-  if (!res.ok) return null;
-  const { listing } = await res.json();
-  return listing ?? null;
+async function fetchListing(id: string) {
+  const { getAdmin } = await import("@/lib/supabase/admin");
+  const { data } = await getAdmin()
+    .from("listings")
+    .select("*")
+    .eq("id", id)
+    .eq("status", "active")
+    .single();
+  return data;
+}
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+  const data = await fetchListing(params.id);
+  if (!data) return { title: "Listing Not Found" };
+  return {
+    title: `${data.title} — $${Number(data.price).toLocaleString()}`,
+    description: `${data.year} ${data.make} ${data.model} for sale in ${data.location}. ${data.description?.slice(0, 120) ?? ""}`,
+    openGraph: {
+      title: `${data.title} — $${Number(data.price).toLocaleString()}`,
+      description: `${data.year} ${data.make} ${data.model} for sale in ${data.location}.`,
+      images: data.images?.[0] ? [data.images[0]] : [],
+    },
+  };
 }
 
 export default async function CartDetailPage({
@@ -20,16 +36,8 @@ export default async function CartDetailPage({
 }: {
   params: { id: string };
 }) {
-  // Fetch directly via Supabase admin in server component
-  const { getAdmin } = await import("@/lib/supabase/admin");
-  const { data, error } = await getAdmin()
-    .from("listings")
-    .select("*")
-    .eq("id", params.id)
-    .eq("status", "active")
-    .single();
-
-  if (error || !data) return notFound();
+  const data = await fetchListing(params.id);
+  if (!data) return notFound();
 
   const cart: GolfCart = {
     id: data.id,
