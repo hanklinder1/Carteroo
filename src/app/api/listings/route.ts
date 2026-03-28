@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { GolfCart } from "@/lib/types";
 
 // Map DB row → GolfCart
@@ -59,6 +60,12 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Must be logged in to create a listing" }, { status: 401 });
+  }
+
   const body = await req.json();
 
   const required = ["title", "price", "year", "make", "model", "condition", "powerType", "sellerName", "sellerEmail"];
@@ -88,7 +95,7 @@ export async function POST(req: NextRequest) {
       seller_name: body.sellerName,
       seller_email: body.sellerEmail,
       seller_phone: body.sellerPhone ?? "",
-      seller_id: body.userId ?? null,
+      seller_id: user.id,
       status: "active",
     })
     .select()
