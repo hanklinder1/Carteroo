@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { User, MapPin, Calendar, Plus, Pencil, Trash2, CheckCircle, Heart } from "lucide-react";
+import { User, MapPin, Calendar, Plus, Pencil, Trash2, CheckCircle, Heart, Zap } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import CartCard from "@/components/CartCard";
 import type { GolfCart } from "@/lib/types";
@@ -28,6 +28,7 @@ export default function ProfilePage() {
   const [editing, setEditing] = useState(false);
   const [editForm, setEditForm] = useState({ name: "", phone: "", location: "" });
   const [saving, setSaving] = useState(false);
+  const [boosting, setBoosting] = useState<string | null>(null);
 
   useEffect(() => {
     const supabase = createClient();
@@ -115,6 +116,18 @@ export default function ProfilePage() {
     if (!confirm("Delete this listing?")) return;
     await fetch(`/api/listings/${id}`, { method: "DELETE" });
     setMyListings((prev) => prev.filter((l) => l.id !== id));
+  }
+
+  async function boostListing(id: string, type: "boostWeek" | "boostMonth") {
+    setBoosting(id);
+    const res = await fetch("/api/stripe/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ type, listingId: id }),
+    });
+    const { url, error } = await res.json();
+    if (error) { alert(error); setBoosting(null); return; }
+    window.location.href = url;
   }
 
   async function markSold(id: string) {
@@ -316,6 +329,29 @@ export default function ProfilePage() {
                     >
                       View
                     </Link>
+                    <div className="relative group">
+                      <button
+                        disabled={boosting === cart.id}
+                        className="flex items-center gap-1 text-xs text-amber-600 hover:text-amber-700 px-2 py-1 rounded-lg hover:bg-amber-50 transition-colors disabled:opacity-50"
+                      >
+                        <Zap size={13} />
+                        {boosting === cart.id ? "..." : "Boost"}
+                      </button>
+                      <div className="absolute right-0 top-full mt-1 bg-white border border-gray-200 rounded-xl shadow-lg p-1 hidden group-hover:block z-10 w-40">
+                        <button
+                          onClick={() => boostListing(cart.id, "boostWeek")}
+                          className="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-amber-50 text-gray-700 hover:text-amber-700 transition-colors"
+                        >
+                          7 days — $9.99
+                        </button>
+                        <button
+                          onClick={() => boostListing(cart.id, "boostMonth")}
+                          className="w-full text-left text-xs px-3 py-2 rounded-lg hover:bg-amber-50 text-gray-700 hover:text-amber-700 transition-colors"
+                        >
+                          30 days — $19.99
+                        </button>
+                      </div>
+                    </div>
                     <button
                       onClick={() => markSold(cart.id)}
                       className="flex items-center gap-1 text-xs text-gray-500 hover:text-teal-700 px-2 py-1 rounded-lg hover:bg-teal-50 transition-colors"
