@@ -84,8 +84,8 @@ export default function TermsPage() {
           <h2 className="text-lg font-semibold text-gray-900 mb-2">9. Contact</h2>
           <p>
             Questions about these terms? Email us at{" "}
-            <a href="mailto:hello@carteroo.com" className="text-teal-700 hover:underline">
-              hello@carteroo.com
+            <a href="mailto:marketplace@carteroo.com" className="text-teal-700 hover:underline">
+              marketplace@carteroo.com
             </a>
           </p>
         </section>

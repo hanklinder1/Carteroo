@@ -20,7 +20,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2 text-gray-500 text-xs">
               <span className="flex items-center gap-2">
                 <Mail size={13} className="text-teal-500" />
-                support@carteroo.com
+                marketplace@carteroo.com
               </span>
               <span className="flex items-center gap-2">
                 <Phone size={13} className="text-teal-500" />
