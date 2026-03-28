@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import CartCard from "@/components/CartCard";
 import { GolfCart } from "@/lib/types";
 import Link from "next/link";
@@ -16,12 +17,13 @@ const priceRanges = [
 ];
 
 export default function MarketplacePage() {
+  const searchParams = useSearchParams();
   const [listings, setListings] = useState<GolfCart[]>([]);
   const [loading, setLoading] = useState(true);
-  const [make, setMake] = useState("");
-  const [condition, setCondition] = useState("");
-  const [price, setPrice] = useState("");
-  const [powerType, setPowerType] = useState("");
+  const [make, setMake] = useState(searchParams.get("make") ?? "");
+  const [condition, setCondition] = useState(searchParams.get("condition") ?? "");
+  const [price, setPrice] = useState(searchParams.get("price") ?? "");
+  const [powerType, setPowerType] = useState(searchParams.get("powerType") ?? "");
 
   useEffect(() => {
     setLoading(true);

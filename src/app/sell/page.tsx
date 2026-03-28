@@ -38,7 +38,7 @@ export default function SellPage() {
   useEffect(() => {
     const supabase = createClient();
     supabase.auth.getUser().then(async ({ data: { user } }) => {
-      if (!user) return;
+      if (!user) { router.replace("/login?next=/sell"); return; }
       setUserId(user.id);
       // Pre-fill seller info from profile
       const { data: profile } = await supabase

@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { User, MapPin, Calendar, Plus, Pencil, Trash2, CheckCircle, Heart, Zap } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { User, MapPin, Calendar, Plus, Pencil, Trash2, CheckCircle, Heart, Zap, PartyPopper } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import CartCard from "@/components/CartCard";
 import type { GolfCart } from "@/lib/types";
@@ -19,6 +19,8 @@ interface Profile {
 
 export default function ProfilePage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const paymentStatus = searchParams.get("payment");
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [myListings, setMyListings] = useState<GolfCart[]>([]);
@@ -169,6 +171,18 @@ export default function ProfilePage() {
   return (
     <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <h1 className="text-2xl font-bold text-gray-900 mb-6">Your Profile</h1>
+
+      {paymentStatus === "success" && (
+        <div className="flex items-center gap-3 bg-teal-50 border border-teal-200 text-teal-800 rounded-xl px-4 py-3 mb-6 text-sm font-medium">
+          <PartyPopper size={18} className="text-teal-600 flex-shrink-0" />
+          Payment successful! Your listing has been boosted and will appear at the top of the marketplace.
+        </div>
+      )}
+      {paymentStatus === "cancelled" && (
+        <div className="flex items-center gap-3 bg-gray-50 border border-gray-200 text-gray-600 rounded-xl px-4 py-3 mb-6 text-sm">
+          Payment cancelled — no charge was made.
+        </div>
+      )}
 
       {/* Profile card */}
       <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
