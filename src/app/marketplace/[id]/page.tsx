@@ -60,6 +60,7 @@ export default async function CartDetailPage({
     sellerEmail: data.seller_email,
     sellerPhone: data.seller_phone ?? "",
     createdAt: data.created_at,
+    isFeatured: data.is_featured ?? false,
   };
 
   const listedDate = new Date(cart.createdAt).toLocaleDateString("en-US", {

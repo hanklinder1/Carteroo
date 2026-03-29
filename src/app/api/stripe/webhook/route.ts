@@ -1,14 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getStripe } from "@/lib/stripe";
+import { getStripe, STRIPE_PRICES } from "@/lib/stripe";
 import { getAdmin } from "@/lib/supabase/admin";
 
 function tierFromPriceId(priceId: string): string {
-  const map: Record<string, string> = {
-    [process.env.STRIPE_PRICE_STANDARD ?? ""]: "standard",
-    [process.env.STRIPE_PRICE_PREMIUM  ?? ""]: "premium",
-    [process.env.STRIPE_PRICE_PRO      ?? ""]: "pro",
-  };
-  return map[priceId] ?? "free";
+  if (priceId === STRIPE_PRICES.dealerStandard) return "standard";
+  if (priceId === STRIPE_PRICES.dealerPremium)  return "premium";
+  if (priceId === STRIPE_PRICES.dealerPro)      return "pro";
+  return "free";
 }
 
 export async function POST(req: NextRequest) {

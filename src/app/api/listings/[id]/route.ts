@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getAdmin } from "@/lib/supabase/admin";
+import { createClient } from "@/lib/supabase/server";
 import { GolfCart } from "@/lib/types";
 
 function toGolfCart(row: Record<string, unknown>): GolfCart {
@@ -24,6 +25,7 @@ function toGolfCart(row: Record<string, unknown>): GolfCart {
     sellerEmail: row.seller_email as string,
     sellerPhone: (row.seller_phone as string) ?? "",
     createdAt: row.created_at as string,
+    isFeatured: (row.is_featured as boolean) ?? false,
   };
 }
 
@@ -49,6 +51,21 @@ export async function PATCH(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  // Verify the user owns this listing
+  const { data: existing } = await getAdmin()
+    .from("listings")
+    .select("seller_id")
+    .eq("id", params.id)
+    .single();
+
+  if (!existing || existing.seller_id !== user.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const body = await req.json();
 
   const { data, error } = await getAdmin()

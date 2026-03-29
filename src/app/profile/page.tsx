@@ -65,7 +65,7 @@ function ProfileContent() {
           images: row.images ?? [], features: row.features ?? [], location: row.location,
           sellerId: row.seller_id ?? "", sellerName: row.seller_name,
           sellerEmail: row.seller_email, sellerPhone: row.seller_phone ?? "",
-          createdAt: row.created_at,
+          createdAt: row.created_at, isFeatured: row.is_featured ?? false,
         })));
       }
 
@@ -90,6 +90,7 @@ function ProfileContent() {
             location: row!.location as string, sellerId: (row!.seller_id as string) ?? "",
             sellerName: row!.seller_name as string, sellerEmail: row!.seller_email as string,
             sellerPhone: (row!.seller_phone as string) ?? "", createdAt: row!.created_at as string,
+            isFeatured: (row!.is_featured as boolean) ?? false,
           }));
         setFavorites(favListings);
       }

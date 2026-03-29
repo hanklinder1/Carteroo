@@ -37,6 +37,15 @@ export async function GET(req: NextRequest) {
   const powerType = searchParams.get("powerType");
   const priceRange = searchParams.get("price");
 
+  const now = new Date().toISOString();
+
+  // Un-feature any listings whose boost has expired
+  await getAdmin()
+    .from("listings")
+    .update({ is_featured: false })
+    .eq("is_featured", true)
+    .lt("featured_until", now);
+
   let query = getAdmin()
     .from("listings")
     .select("*")
