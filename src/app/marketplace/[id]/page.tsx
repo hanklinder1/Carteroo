@@ -1,8 +1,8 @@
 import Link from "next/link";
-import Image from "next/image";
 import { notFound } from "next/navigation";
 import { ArrowLeft, MapPin, Zap, Fuel, Users, Gauge, Battery, Calendar, User } from "lucide-react";
 import ContactForm from "./ContactForm";
+import ImageGallery from "./ImageGallery";
 import { GolfCart } from "@/lib/types";
 import type { Metadata } from "next";
 
@@ -81,32 +81,7 @@ export default async function CartDetailPage({
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Images */}
-        <div>
-          <div className="aspect-[4/3] relative rounded-xl overflow-hidden bg-teal-50">
-            {cart.images[0] ? (
-              <Image
-                src={cart.images[0]}
-                alt={cart.title}
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-            ) : (
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="text-gray-400 text-sm">No Photos</span>
-              </div>
-            )}
-          </div>
-          {cart.images.length > 1 && (
-            <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
-              {cart.images.slice(1).map((img, i) => (
-                <div key={i} className="w-20 h-16 relative flex-shrink-0 rounded-lg overflow-hidden bg-gray-100">
-                  <Image src={img} alt={`Photo ${i + 2}`} fill className="object-cover" sizes="80px" />
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+        <ImageGallery images={cart.images} title={cart.title} />
 
         {/* Details */}
         <div>

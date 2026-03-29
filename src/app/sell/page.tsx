@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Upload, ChevronRight, ChevronLeft, X } from "lucide-react";
+import { Upload, ChevronRight, ChevronLeft, X, MapPin, Zap, Fuel, Users, Calendar } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 
 const steps = ["Details", "Specs", "Photos", "Review"];
@@ -441,7 +441,83 @@ export default function SellPage() {
         {/* Step 4: Review & Submit */}
         {currentStep === 3 && (
           <div>
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">Review Your Listing</h2>
+            <h2 className="text-lg font-semibold text-gray-800 mb-1">Review Your Listing</h2>
+            <p className="text-gray-400 text-xs mb-5">Here&apos;s a preview of how buyers will see your listing.</p>
+
+            {/* Listing preview card */}
+            <div className="rounded-2xl overflow-hidden border border-gray-200 mb-6">
+              <div className="aspect-[4/3] relative bg-gray-100 overflow-hidden">
+                {images[0] ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={images[0]} alt="Cover" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                    <span className="text-gray-400 text-sm">No Photo</span>
+                  </div>
+                )}
+                <div className="absolute top-3 left-3">
+                  {form.condition && (
+                    <span className={`text-xs font-bold px-2.5 py-1 rounded-full text-white shadow-sm ${
+                      form.condition === "new" ? "bg-teal-600"
+                      : form.condition === "like-new" ? "bg-teal-500"
+                      : form.condition === "good" ? "bg-teal-700"
+                      : "bg-gray-700"
+                    }`}>
+                      {form.condition === "like-new" ? "Like New" : form.condition.charAt(0).toUpperCase() + form.condition.slice(1)}
+                    </span>
+                  )}
+                </div>
+                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/30 to-transparent" />
+                <div className="absolute bottom-3 left-3">
+                  {form.price && (
+                    <span className="text-white font-bold text-xl drop-shadow-lg">
+                      ${Number(form.price).toLocaleString()}
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="p-4">
+                <h3 className="text-gray-900 text-sm font-semibold line-clamp-1 mb-2">
+                  {form.title || "Your listing title"}
+                </h3>
+                <div className="flex flex-wrap items-center gap-3 text-gray-500 text-xs mb-3">
+                  {form.powerType && (
+                    <span className="flex items-center gap-1">
+                      {form.powerType === "electric" ? <Zap size={13} className="text-teal-500" /> : <Fuel size={13} className="text-teal-500" />}
+                      {form.powerType === "electric" ? "Electric" : "Gas"}
+                    </span>
+                  )}
+                  {form.seats && (
+                    <span className="flex items-center gap-1">
+                      <Users size={13} className="text-teal-500" />
+                      {form.seats} seats
+                    </span>
+                  )}
+                  {form.year && (
+                    <span className="flex items-center gap-1">
+                      <Calendar size={13} className="text-teal-500" />
+                      {form.year}
+                    </span>
+                  )}
+                </div>
+                {form.location && (
+                  <div className="flex items-center gap-1 text-gray-400 text-xs pt-2 border-t border-gray-50">
+                    <MapPin size={12} className="text-teal-400" />
+                    {form.location}
+                  </div>
+                )}
+              </div>
+              {images.length > 1 && (
+                <div className="flex gap-2 px-4 pb-4 overflow-x-auto">
+                  {images.slice(1).map((url, i) => (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img key={i} src={url} alt={`Photo ${i + 2}`} className="w-16 h-12 object-cover rounded-lg flex-shrink-0" />
+                  ))}
+                </div>
+              )}
+            </div>
+
+            {/* Data summary */}
             <div className="space-y-3">
               {[
                 ["Title", form.title],
