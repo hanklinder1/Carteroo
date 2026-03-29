@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { ShoppingCart, Mail, Phone, MapPin } from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
@@ -8,7 +9,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <ShoppingCart size={20} className="text-teal-400" />
+              <Image
+                src="/images/golf-cart.png"
+                alt="Carteroo logo"
+                width={24}
+                height={24}
+                className="object-contain brightness-0 invert"
+              />
               <h3 className="text-white font-extrabold text-lg">
                 Carter<span className="text-teal-400">oo</span>
               </h3>

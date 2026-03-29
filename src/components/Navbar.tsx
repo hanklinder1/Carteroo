@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Menu, X, User, LogOut } from "lucide-react";
+import Image from "next/image";
 import { useDemo } from "@/hooks/useDemo";
 import { createClient } from "@/lib/supabase/client";
 import type { User as SupabaseUser } from "@supabase/supabase-js";
@@ -63,22 +64,13 @@ export default function Navbar() {
             href={isDemo ? "/demo" : "/"}
             className="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-gray-900"
           >
-            <svg width="28" height="24" viewBox="0 0 28 24" fill="none" className="text-teal-600" xmlns="http://www.w3.org/2000/svg">
-              {/* Roof */}
-              <rect x="6" y="2" width="14" height="5" rx="1.5" fill="currentColor" />
-              {/* Roof support */}
-              <rect x="6" y="6" width="2" height="6" fill="currentColor" />
-              <rect x="18" y="6" width="2" height="6" fill="currentColor" />
-              {/* Body */}
-              <rect x="2" y="10" width="22" height="7" rx="2" fill="currentColor" />
-              {/* Front nose */}
-              <path d="M24 12 L27 14 L24 17" fill="currentColor" />
-              {/* Wheels */}
-              <circle cx="7" cy="20" r="3" fill="currentColor" />
-              <circle cx="19" cy="20" r="3" fill="currentColor" />
-              <circle cx="7" cy="20" r="1.2" fill="white" />
-              <circle cx="19" cy="20" r="1.2" fill="white" />
-            </svg>
+            <Image
+              src="/images/golf-cart.png"
+              alt="Carteroo logo"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
             <span>Carter<span className="text-teal-600">oo</span></span>
           </Link>
 
