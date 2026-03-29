@@ -84,6 +84,20 @@ export async function DELETE(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+  const { data: existing } = await getAdmin()
+    .from("listings")
+    .select("seller_id")
+    .eq("id", params.id)
+    .single();
+
+  if (!existing || existing.seller_id !== user.id) {
+    return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+  }
+
   const { error } = await getAdmin()
     .from("listings")
     .delete()

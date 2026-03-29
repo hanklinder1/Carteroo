@@ -31,6 +31,7 @@ function ProfileContent() {
   const [editForm, setEditForm] = useState({ name: "", phone: "", location: "" });
   const [saving, setSaving] = useState(false);
   const [boosting, setBoosting] = useState<string | null>(null);
+  const [featuredUntil, setFeaturedUntil] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const supabase = createClient();
@@ -57,6 +58,11 @@ function ProfileContent() {
         .order("created_at", { ascending: false });
 
       if (listings) {
+        const untilMap: Record<string, string> = {};
+        listings.forEach((row) => {
+          if (row.is_featured && row.featured_until) untilMap[row.id] = row.featured_until;
+        });
+        setFeaturedUntil(untilMap);
         setMyListings(listings.map((row) => ({
           id: row.id, title: row.title, description: row.description,
           price: Number(row.price), year: Number(row.year), make: row.make,
@@ -335,6 +341,12 @@ function ProfileContent() {
                     <div className="min-w-0">
                       <p className="text-gray-900 font-medium text-sm truncate">{cart.title}</p>
                       <p className="text-gray-400 text-xs">${cart.price.toLocaleString()} · {cart.location}</p>
+                      {cart.isFeatured && featuredUntil[cart.id] && (
+                        <p className="text-amber-600 text-xs mt-0.5 flex items-center gap-1">
+                          <Zap size={11} className="flex-shrink-0" />
+                          Boosted until {new Date(featuredUntil[cart.id]).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                        </p>
+                      )}
                     </div>
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">

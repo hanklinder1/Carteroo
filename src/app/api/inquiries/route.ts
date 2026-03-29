@@ -70,5 +70,26 @@ export async function POST(req: NextRequest) {
     console.error("Resend error:", emailError);
   }
 
+  // Send confirmation email to buyer
+  await resend.emails.send({
+    from: FROM_EMAIL,
+    to: buyerEmail,
+    subject: `Your inquiry was sent — ${listing.title}`,
+    html: `
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #0f766e;">Inquiry Sent — Carteroo</h2>
+        <p>Hi <strong>${buyerName}</strong>,</p>
+        <p>Your message has been sent to the seller of <strong>${listing.title}</strong>. They'll be in touch with you at <strong>${buyerEmail}</strong>.</p>
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
+        <p><strong>Your message:</strong></p>
+        <blockquote style="background: #f9fafb; border-left: 4px solid #0f766e; padding: 12px 16px; margin: 0; border-radius: 4px;">
+          ${message}
+        </blockquote>
+        <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 24px 0;" />
+        <p style="color: #9ca3af; font-size: 13px;">You can reply to this email if you have questions. — The Carteroo Team</p>
+      </div>
+    `,
+  });
+
   return NextResponse.json({ success: true }, { status: 201 });
 }

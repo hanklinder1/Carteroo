@@ -501,9 +501,10 @@ export default function SellPage() {
           {currentStep < steps.length - 1 && (
             <button
               onClick={next}
-              className="flex items-center gap-1 bg-teal-700 text-white text-sm font-medium px-5 py-2 rounded-xl hover:bg-teal-800 transition-colors"
+              disabled={currentStep === 2 && uploading}
+              className="flex items-center gap-1 bg-teal-700 text-white text-sm font-medium px-5 py-2 rounded-xl hover:bg-teal-800 transition-colors disabled:opacity-50"
             >
-              Next
+              {currentStep === 2 && uploading ? "Uploading..." : "Next"}
               <ChevronRight size={16} />
             </button>
           )}
