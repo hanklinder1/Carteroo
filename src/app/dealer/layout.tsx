@@ -32,8 +32,25 @@ export default function DealerLayout({ children }: { children: React.ReactNode }
 
   const isLoginPage = pathname === "/dealer/login";
 
+  const isDemo = typeof window !== "undefined" && localStorage.getItem("dealer_demo") === "true";
+
   useEffect(() => {
     if (isLoginPage) { setLoading(false); return; }
+
+    // Demo mode — skip auth, use mock data
+    if (typeof window !== "undefined" && localStorage.getItem("dealer_demo") === "true") {
+      setDealer({
+        id: "demo",
+        user_id: "demo",
+        name: "Demo Dealership",
+        city: "Naples",
+        state: "FL",
+        logo_url: null,
+      });
+      setUnread(3);
+      setLoading(false);
+      return;
+    }
 
     const supabase = createClient();
 
@@ -73,6 +90,9 @@ export default function DealerLayout({ children }: { children: React.ReactNode }
   }, [pathname]);
 
   async function signOut() {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("dealer_demo");
+    }
     const supabase = createClient();
     await supabase.auth.signOut();
     router.replace("/dealer/login");
@@ -142,11 +162,16 @@ export default function DealerLayout({ children }: { children: React.ReactNode }
 
         {/* Sign out */}
         <div className="px-2 py-3 border-t border-white/10">
+          {isDemo && (
+            <div className="mx-1 mb-2 px-2 py-1.5 rounded-lg bg-teal-900/60 text-teal-300 text-xs text-center font-medium">
+              👀 Demo Mode
+            </div>
+          )}
           <button
             onClick={signOut}
             className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors"
           >
-            <span>↩</span> Sign Out
+            <span>↩</span> {isDemo ? "Exit Demo" : "Sign Out"}
           </button>
         </div>
       </aside>

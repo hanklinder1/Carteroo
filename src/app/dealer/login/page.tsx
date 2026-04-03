@@ -14,6 +14,13 @@ export default function DealerLoginPage() {
   const [mode, setMode] = useState<"login" | "reset">("login");
   const [resetSent, setResetSent] = useState(false);
 
+  function handleDemo() {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("dealer_demo", "true");
+    }
+    router.push("/dealer");
+  }
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
     setError("");
@@ -94,6 +101,20 @@ export default function DealerLoginPage() {
                 {loading ? "Signing in..." : "Sign In"}
               </button>
             </form>
+
+            <div className="mt-4 flex items-center gap-3">
+              <div className="flex-1 h-px bg-gray-100" />
+              <span className="text-xs text-gray-400">or</span>
+              <div className="flex-1 h-px bg-gray-100" />
+            </div>
+
+            <button
+              type="button"
+              onClick={handleDemo}
+              className="mt-4 w-full border border-teal-200 text-teal-700 font-medium py-2.5 rounded-xl hover:bg-teal-50 transition-colors text-sm"
+            >
+              👀 Preview Demo Portal
+            </button>
 
             <button
               onClick={() => setMode("reset")}
