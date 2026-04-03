@@ -25,8 +25,18 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  // Refresh session — do not remove this
-  await supabase.auth.getUser();
+  // Refresh session — required for Supabase SSR auth
+  const { data: { user } } = await supabase.auth.getUser();
+
+  // Protect dealer dashboard routes (except the login page itself)
+  const path = request.nextUrl.pathname;
+  const isDealerRoute = path.startsWith("/dealer");
+  const isDealerLogin = path === "/dealer/login";
+
+  if (isDealerRoute && !isDealerLogin && !user) {
+    const loginUrl = new URL("/dealer/login", request.url);
+    return NextResponse.redirect(loginUrl);
+  }
 
   return supabaseResponse;
 }
