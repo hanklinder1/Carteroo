@@ -87,6 +87,13 @@ export default function Navbar() {
               {isDemo ? "Exit Demo" : "Try Demo"}
             </button>
 
+            <Link
+              href="/dealer/login"
+              className="text-xs font-semibold px-4 py-1.5 rounded-full bg-teal-700 text-white hover:bg-teal-800 transition-colors"
+            >
+              Dealer Portal
+            </Link>
+
             {user ? (
               <div className="flex items-center gap-2">
                 <Link
@@ -149,6 +156,13 @@ export default function Navbar() {
             >
               {isDemo ? "Exit Demo" : "Try Demo"}
             </button>
+            <Link
+              href="/dealer/login"
+              className="text-xs font-semibold px-3 py-1.5 rounded-full bg-teal-700 text-white"
+              onClick={() => setMobileOpen(false)}
+            >
+              Dealer Portal
+            </Link>
             {user ? (
               <>
                 <Link
